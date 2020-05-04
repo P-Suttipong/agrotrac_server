@@ -4,7 +4,7 @@ var track_address;
 var track_port = 1;
 var ack = new Buffer("");
 var app_ack = new Buffer("");
-var direct = [];
+var message = [];
 
 server.on("error", function(err) {
 	console.log("server error:\n"+err.stack);
@@ -14,8 +14,8 @@ server.on("message", function(msg,rinfo){
 	console.log("server got: "+msg+" from "+rinfo.address+" : "+rinfo.port);
 	if(msg.length > 4){
 		var newMsg = msg.toString();
-		direct = newMsg.split("-");
-		console.log(direct);
+		message = newMsg.split("-");
+		console.log(message);
 	}
 	if(msg == "connectFromApp"){
 		ack = new Buffer("1");
@@ -25,17 +25,26 @@ server.on("message", function(msg,rinfo){
 		track_port = rinfo.port;
 		ack = new Buffer("connected");
 	}
-	else if(direct[0] == "forward"){
-		ack = new Buffer("forward-" + direct[1]);
+	else if(msg == "start"){
+		ack = new Buffer("start");
 	}
-	else if(direct[0] == "backward"){
-		ack = new Buffer("backward-" + direct[1]);
+	else if(msg == "stop"){
+		ack = new Buffer("stop");
 	}
-	else if(direct[0] == "right"){
-		ack = new Buffer("right-" + direct[1]);
+	else if(message[0] == "forward"){
+		ack = new Buffer("forward-" + message[1]);
 	}
-	else if(direct[0] == "left"){
-		ack = new Buffer("left-" + direct[1]);
+	else if(message[0] == "backward"){
+		ack = new Buffer("backward-" + message[1]);
+	}
+	else if(message[0] == "right"){
+		ack = new Buffer("right-" + message[1]);
+	}
+	else if(message[0] == "left"){
+		ack = new Buffer("left-" + message[1]);
+	}
+	else if(message[0] == "area"){
+		ack = new Buffer("area-" + message[1] + message[2]);
 	}	
 	server.send(ack,0,ack.length,rinfo.port,rinfo.address, function(err,bytes){
 		console.log("Sended   : "+ack);
