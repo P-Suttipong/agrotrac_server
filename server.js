@@ -45,7 +45,10 @@ server.on("message", function(msg,rinfo){
 	}
 	else if(message[0] == "area"){
 		ack = new Buffer("area-" + message[1] +"-"+ message[2]);
-	}	
+	}
+	else if(message[0] == "set"){
+		ack = new Buffer("set-" + message[1] +"-"+ message[2]);
+	}
 	server.send(ack,0,ack.length,rinfo.port,rinfo.address, function(err,bytes){
 		console.log("Sended   : "+ack);
 	});
