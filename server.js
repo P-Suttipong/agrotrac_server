@@ -5,7 +5,7 @@ var track_port = 1;
 var ack = new Buffer("");
 var app_ack = new Buffer("");
 var value = "";
-var direct = "";
+var direct = [];
 
 server.on("error", function(err) {
 	console.log("server error:\n"+err.stack);
@@ -14,7 +14,8 @@ server.on("error", function(err) {
 server.on("message", function(msg,rinfo){
 	console.log("server got: "+msg+" from "+rinfo.address+" : "+rinfo.port);
 	if(msg.length > 7){
-		direct = msg.split("-");
+		var newMsg = msg.toString();
+		direct = newMsg.split("-");
 		print(direct);
 	}
 	if(msg == "connectFromApp"){
