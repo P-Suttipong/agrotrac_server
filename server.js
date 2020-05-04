@@ -4,7 +4,6 @@ var track_address;
 var track_port = 1;
 var ack = new Buffer("");
 var app_ack = new Buffer("");
-var value = "";
 var direct = [];
 
 server.on("error", function(err) {
@@ -16,7 +15,7 @@ server.on("message", function(msg,rinfo){
 	if(msg.length > 7){
 		var newMsg = msg.toString();
 		direct = newMsg.split("-");
-		print(direct);
+		console.log(direct);
 	}
 	if(msg == "connectFromApp"){
 		ack = new Buffer("1");
@@ -26,8 +25,8 @@ server.on("message", function(msg,rinfo){
 		track_port = rinfo.port;
 		ack = new Buffer("connected");
 	}
-	else if(msg == "forward"){
-		ack = new Buffer("forward");
+	else if(direct[0] == "forward"){
+		ack = new Buffer("forward"+direct[1]);
 	}
 	else if(msg == "backward"){
 		ack = new Buffer("backward");
