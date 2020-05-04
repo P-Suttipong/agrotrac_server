@@ -12,7 +12,7 @@ server.on("error", function(err) {
 });
 server.on("message", function(msg,rinfo){
 	console.log("server got: "+msg+" from "+rinfo.address+" : "+rinfo.port);
-	if(msg.length > 7){
+	if(msg.length > 4){
 		var newMsg = msg.toString();
 		direct = newMsg.split("-");
 		console.log(direct);
