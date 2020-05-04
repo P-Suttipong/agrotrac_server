@@ -26,16 +26,16 @@ server.on("message", function(msg,rinfo){
 		ack = new Buffer("connected");
 	}
 	else if(direct[0] == "forward"){
-		ack = new Buffer("forward" + "-" + direct[1]);
+		ack = new Buffer("forward-" + direct[1]);
 	}
 	else if(direct[0] == "backward"){
-		ack = new Buffer("backward" + "-" + direct[1]);
+		ack = new Buffer("backward-" + direct[1]);
 	}
 	else if(direct[0] == "right"){
-		ack = new Buffer("right" + "-" + direct[1]);
+		ack = new Buffer("right-" + direct[1]);
 	}
 	else if(direct[0] == "left"){
-		ack = new Buffer("left" + "-" + direct[1]);
+		ack = new Buffer("left-" + direct[1]);
 	}	
 	server.send(ack,0,ack.length,rinfo.port,rinfo.address, function(err,bytes){
 		console.log("Sended   : "+ack);
