@@ -31,6 +31,12 @@ server.on("message", function(msg,rinfo){
 	else if(msg == "stop"){
 		ack = new Buffer("stop");
 	}
+	else if(msg == "up"){
+		ack = new Buffer("up");
+	}
+	else if(msg == "down"){
+		ack = new Buffer("down");
+	}
 	else if(message[0] == "forward"){
 		ack = new Buffer("forward-" + message[1]);
 	}
